@@ -22,10 +22,6 @@ class MainViewModel @Inject constructor(
     private val _eventDicoding = MutableStateFlow<ResultState<DicodingEvent>>(ResultState.Idle)
     val eventDicoding = _eventDicoding.asStateFlow()
 
-    init {
-        getEventDicoding(0)
-    }
-
     fun getEventDicoding(active: Int) = viewModelScope.launch {
         useCase.getEventUsecase(active)
             .onStart {

@@ -3,6 +3,7 @@ package com.example.dicodingevent.di
 import com.example.dicodingevent.data.ApiService
 import com.example.dicodingevent.data.repository.RemoteDataRepositoryImpl
 import com.example.dicodingevent.domain.repository.RemoteDataRepository
+import com.example.dicodingevent.domain.usecase.GetEventDetailUsecase
 import com.example.dicodingevent.domain.usecase.GetEventUsecase
 import com.example.dicodingevent.domain.usecase.UseCase
 import com.example.dicodingevent.util.Constants
@@ -45,7 +46,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideUseCase(getEventUsecase: GetEventUsecase): UseCase {
-        return UseCase(getEventUsecase)
+    fun provideUseCase(getEventUsecase: GetEventUsecase, getEventDetailUsecase: GetEventDetailUsecase): UseCase {
+        return UseCase(getEventDetailUsecase = getEventDetailUsecase, getEventUsecase = getEventUsecase)
     }
 }

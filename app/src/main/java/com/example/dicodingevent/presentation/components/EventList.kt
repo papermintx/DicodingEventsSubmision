@@ -12,7 +12,7 @@ import com.example.dicodingevent.domain.model.Event
 @Composable
 fun EventList(
     events: List<Event>,
-    onEventClick: (Event) -> Unit,
+    onEventClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(
@@ -24,7 +24,7 @@ fun EventList(
         items(events) { event ->
             EventItem(
                 eventItem = event,
-                onClick = { onEventClick(event) }
+                onClick = onEventClick
             )
         }
     }

@@ -35,12 +35,12 @@ import com.example.dicodingevent.util.Font
 fun EventItem(
     modifier: Modifier = Modifier,
     eventItem: Event,
-    onClick: () -> Unit
+    onClick: (Int) -> Unit
 ) {
     Card(
         modifier = modifier
             .clickable {
-                onClick()
+                onClick(eventItem.id)
             }
             .shadow(
                 elevation = 4.dp,
