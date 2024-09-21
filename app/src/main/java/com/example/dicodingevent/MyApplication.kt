@@ -1,8 +1,7 @@
-package com.example.dicodingevent;
+package com.example.dicodingevent
 
-import android.app.Application;
+import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MyApplication : Application() {
-}
+class MyApplication : Application()

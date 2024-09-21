@@ -1,14 +1,16 @@
 package com.example.dicodingevent.presentation.detailscreen
 
+import android.content.Intent
+import android.net.Uri
 import android.text.Html
 import android.text.Spanned
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,7 +25,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.dicodingevent.presentation.DetailViewModel
 import com.example.dicodingevent.presentation.components.ErrorScreen
 import com.example.dicodingevent.presentation.components.LoadingScreen
 import com.example.dicodingevent.util.ResultState
@@ -36,7 +37,11 @@ fun DetailEventScreen(
     id: Int,
     onBack: () -> Unit,
 
-) {
+    ) {
+    // on below line we are creating
+    // a variable for a context
+    val ctx = LocalContext.current
+
     LaunchedEffect(id) {
         viewModel.getEventDetailDicoding(id)
     }
@@ -154,7 +159,12 @@ fun DetailEventScreen(
                     item {
                         Button(
                             onClick = {
-
+                                Log.e("tag","URL IS "+event.link)
+                                val urlIntent = Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse(event.link)
+                                )
+                                ctx.startActivity(urlIntent)
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {

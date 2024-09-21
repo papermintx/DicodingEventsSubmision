@@ -1,4 +1,4 @@
-package com.example.dicodingevent.presentation
+package com.example.dicodingevent.presentation.detailscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -21,14 +21,15 @@ class DetailViewModel @Inject constructor(
     private val _eventDetailDicoding = MutableStateFlow<ResultState<Event>>(ResultState.Idle)
     val eventDetailDicoding = _eventDetailDicoding.asStateFlow()
 
-    init {
-        getEventDetailDicoding(8898)
-    }
+    private var isDataFetched = false
 
     fun getEventDetailDicoding(id: Int)  = viewModelScope.launch {
         useCase.getEventDetailUsecase(id)
             .onStart {
-                _eventDetailDicoding.value = ResultState.Loading
+                if (!isDataFetched) {
+                    _eventDetailDicoding.value = ResultState.Loading
+                    isDataFetched = true
+                }
             }
             .catch { error ->
                 _eventDetailDicoding.value = ResultState.Error(error)

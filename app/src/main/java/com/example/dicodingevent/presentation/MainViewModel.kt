@@ -22,10 +22,16 @@ class MainViewModel @Inject constructor(
     private val _eventDicoding = MutableStateFlow<ResultState<DicodingEvent>>(ResultState.Idle)
     val eventDicoding = _eventDicoding.asStateFlow()
 
+    private var isDataFetched = false // Flag to check if data is already fetched
+
+
     fun getEventDicoding(active: Int) = viewModelScope.launch {
         useCase.getEventUsecase(active)
             .onStart {
-                _eventDicoding.value = ResultState.Loading
+                if (!isDataFetched) {
+                    _eventDicoding.value = ResultState.Loading
+                    isDataFetched = true
+                }
             }
             .catch {error ->
                 _eventDicoding.value = ResultState.Error(error)
@@ -33,6 +39,7 @@ class MainViewModel @Inject constructor(
             .collect{event ->
                 val result = event.toDicodingEvent()
                 _eventDicoding.value = ResultState.Success(result)
+
             }
     }
 }
