@@ -2,8 +2,9 @@ package com.example.dicodingevent.presentation.detailscreen
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.dicodingevent.data.dto.toEvent
+import com.example.dicodingevent.data.network.dto.toEvent
 import com.example.dicodingevent.domain.model.Event
+import com.example.dicodingevent.domain.model.EventEntity
 import com.example.dicodingevent.domain.usecase.UseCase
 import com.example.dicodingevent.util.ResultState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,27 +19,23 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     private val useCase: UseCase
 ) : ViewModel() {
-    private val _eventDetailDicoding = MutableStateFlow<ResultState<Event>>(ResultState.Idle)
-    val eventDetailDicoding = _eventDetailDicoding.asStateFlow()
 
-    private var isDataFetched = false
+    private val _eventDetailLocalDicoding = MutableStateFlow<ResultState<EventEntity>>(ResultState.Idle)
+    val eventDetailLocalDicoding = _eventDetailLocalDicoding.asStateFlow()
 
-    fun getEventDetailDicoding(id: Int)  = viewModelScope.launch {
-        useCase.getEventDetailUsecase(id)
+    fun getEvenLocaltById(id: Int) = viewModelScope.launch {
+        useCase.getEventLocalByIdUseCase(id)
             .onStart {
-                if (!isDataFetched) {
-                    _eventDetailDicoding.value = ResultState.Loading
-                    isDataFetched = true
-                }
+                _eventDetailLocalDicoding.value = ResultState.Loading
             }
             .catch { error ->
-                _eventDetailDicoding.value = ResultState.Error(error)
+                _eventDetailLocalDicoding.value = ResultState.Error(error)
             }
             .collect { event ->
-                val result = event.event.toEvent()
-                _eventDetailDicoding.value = ResultState.Success(result)
+                _eventDetailLocalDicoding.value = ResultState.Success(event)
             }
-        }
+
+    }
 
 }
 

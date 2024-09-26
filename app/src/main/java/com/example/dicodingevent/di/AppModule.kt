@@ -1,22 +1,18 @@
 package com.example.dicodingevent.di
 
-import com.example.dicodingevent.data.ApiService
-import com.example.dicodingevent.data.repository.RemoteDataRepositoryImpl
-import com.example.dicodingevent.domain.repository.RemoteDataRepository
-import com.example.dicodingevent.domain.usecase.GetEventDetailUsecase
-import com.example.dicodingevent.domain.usecase.GetEventUsecase
 import com.example.dicodingevent.domain.usecase.UseCase
-import com.example.dicodingevent.util.Constants
-import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.example.dicodingevent.domain.usecase.local.GetAllEventLocalFavorite
+import com.example.dicodingevent.domain.usecase.local.GetAllEventLocalUseCase
+import com.example.dicodingevent.domain.usecase.local.GetEventLocalByIdUseCase
+import com.example.dicodingevent.domain.usecase.local.InsertAllEventLocalUseCase
+import com.example.dicodingevent.domain.usecase.local.UpdateEventLocalUseCase
+import com.example.dicodingevent.domain.usecase.network.GetEventDetailUsecase
+import com.example.dicodingevent.domain.usecase.network.GetEventUsecase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,29 +20,23 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideMoshit(): Moshi = Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
-        .build()
-
-    @Provides
-    @Singleton
-    fun provideApiService(moshi: Moshi): ApiService{
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL)
-            .addConverterFactory(MoshiConverterFactory.create(moshi))
-            .build()
-            .create(ApiService::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideRemoteRepository(apiService: ApiService): RemoteDataRepository{
-        return RemoteDataRepositoryImpl(apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUseCase(getEventUsecase: GetEventUsecase, getEventDetailUsecase: GetEventDetailUsecase): UseCase {
-        return UseCase(getEventDetailUsecase = getEventDetailUsecase, getEventUsecase = getEventUsecase)
+    fun provideUseCase(
+        getEventUsecase: GetEventUsecase,
+        getEventDetailUsecase: GetEventDetailUsecase,
+        getAllEventLocalUseCase: GetAllEventLocalUseCase,
+        insertAllEventLocalUseCase: InsertAllEventLocalUseCase,
+        getAllEventLocalFavorite: GetAllEventLocalFavorite,
+        getEventLocalByIdUseCase: GetEventLocalByIdUseCase,
+        updateEventLocalUseCase: UpdateEventLocalUseCase
+    ): UseCase {
+        return UseCase(
+            getEventUsecase,
+            getEventDetailUsecase,
+            getAllEventLocalUseCase,
+            updateEventLocalUseCase,
+            getEventLocalByIdUseCase,
+            getAllEventLocalFavorite,
+            insertAllEventLocalUseCase
+        )
     }
 }

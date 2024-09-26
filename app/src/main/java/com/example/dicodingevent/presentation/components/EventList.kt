@@ -8,10 +8,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.dicodingevent.domain.model.Event
+import com.example.dicodingevent.domain.model.EventEntity
 
 @Composable
 fun EventList(
-    events: List<Event>,
+    events: List<EventEntity>,
     onEventClick: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {

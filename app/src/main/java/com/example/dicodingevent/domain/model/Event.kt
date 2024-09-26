@@ -16,3 +16,23 @@ data class Event(
     val endTime: String,
     val link: String
 )
+
+fun Event.toEntity(): EventEntity {
+    return EventEntity(
+        id = id,
+        name = name,
+        summary = summary,
+        description = description,
+        imageLogo = imageLogo,
+        mediaCover = mediaCover,
+        category = category,
+        ownerName = ownerName,
+        cityName = cityName,
+        quota = quota,
+        registrants = registrants,
+        beginTime = beginTime,
+        endTime = endTime,
+        link = link,
+        isFavorite = 0
+    )
+}

@@ -1,6 +1,6 @@
-package com.example.dicodingevent.domain.usecase
+package com.example.dicodingevent.domain.usecase.network
 
-import com.example.dicodingevent.data.dto.DicodingEventDto
+import com.example.dicodingevent.data.network.dto.DicodingEventDto
 import com.example.dicodingevent.domain.repository.RemoteDataRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

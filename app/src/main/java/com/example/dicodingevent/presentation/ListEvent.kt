@@ -36,7 +36,7 @@ fun ListEvent(
         viewModel.getEventDicoding(active)
     }
 
-    val uiState by viewModel.eventDicoding.collectAsState()
+    val uiState by viewModel.eventLocalDicoding.collectAsState()
     Column(
         modifier = Modifier.fillMaxSize()
             .padding(paddingValues),
@@ -44,7 +44,7 @@ fun ListEvent(
     ) {
         when (val state = uiState) {
             is ResultState.Success -> {
-                EventList(events = state.data.listEvents, onEventClick = onItemClick)
+                EventList(events = state.data, onEventClick = onItemClick)
             }
             is ResultState.Error -> {
                 ErrorScreen(message = "Error: ${state.exception.message}")

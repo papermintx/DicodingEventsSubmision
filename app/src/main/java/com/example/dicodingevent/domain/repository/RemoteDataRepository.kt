@@ -1,7 +1,7 @@
 package com.example.dicodingevent.domain.repository
 
-import com.example.dicodingevent.data.dto.DetailEventDto
-import com.example.dicodingevent.data.dto.DicodingEventDto
+import com.example.dicodingevent.data.network.dto.DetailEventDto
+import com.example.dicodingevent.data.network.dto.DicodingEventDto
 
 interface RemoteDataRepository {
     suspend fun getEvents(active: Int): DicodingEventDto

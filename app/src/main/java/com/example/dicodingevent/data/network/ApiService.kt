@@ -1,7 +1,7 @@
-package com.example.dicodingevent.data
+package com.example.dicodingevent.data.network
 
-import com.example.dicodingevent.data.dto.DetailEventDto
-import com.example.dicodingevent.data.dto.DicodingEventDto
+import com.example.dicodingevent.data.network.dto.DetailEventDto
+import com.example.dicodingevent.data.network.dto.DicodingEventDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

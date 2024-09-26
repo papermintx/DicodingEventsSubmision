@@ -28,13 +28,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.dicodingevent.domain.model.Event
+import com.example.dicodingevent.domain.model.EventEntity
 import com.example.dicodingevent.ui.theme.DicodingEventTheme
 import com.example.dicodingevent.util.Font
 
 @Composable
 fun EventItem(
     modifier: Modifier = Modifier,
-    eventItem: Event,
+    eventItem: EventEntity,
     onClick: (Int) -> Unit
 ) {
     Card(

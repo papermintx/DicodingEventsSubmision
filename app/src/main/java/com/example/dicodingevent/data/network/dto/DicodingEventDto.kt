@@ -1,4 +1,4 @@
-package com.example.dicodingevent.data.dto
+package com.example.dicodingevent.data.network.dto
 
 
 import com.example.dicodingevent.domain.model.DicodingEvent

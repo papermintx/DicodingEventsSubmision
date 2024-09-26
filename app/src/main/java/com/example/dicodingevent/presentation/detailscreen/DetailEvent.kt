@@ -43,9 +43,9 @@ fun DetailEventScreen(
     val ctx = LocalContext.current
 
     LaunchedEffect(id) {
-        viewModel.getEventDetailDicoding(id)
+        viewModel.getEvenLocaltById(id)
     }
-    val uiState by viewModel.eventDetailDicoding.collectAsState()
+    val uiState by viewModel.eventDetailLocalDicoding.collectAsState()
 
     Scaffold(
         topBar = {
