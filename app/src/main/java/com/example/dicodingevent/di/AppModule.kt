@@ -1,13 +1,13 @@
 package com.example.dicodingevent.di
 
 import com.example.dicodingevent.domain.usecase.UseCase
-import com.example.dicodingevent.domain.usecase.local.GetAllEventLocalFavorite
-import com.example.dicodingevent.domain.usecase.local.GetAllEventLocalUseCase
-import com.example.dicodingevent.domain.usecase.local.GetEventLocalByIdUseCase
-import com.example.dicodingevent.domain.usecase.local.InsertAllEventLocalUseCase
-import com.example.dicodingevent.domain.usecase.local.UpdateEventLocalUseCase
-import com.example.dicodingevent.domain.usecase.network.GetEventDetailUsecase
-import com.example.dicodingevent.domain.usecase.network.GetEventUsecase
+import com.example.dicodingevent.domain.usecase.local.DeleteFavoriteEvent
+import com.example.dicodingevent.domain.usecase.local.GetAllFavoriteEvents
+import com.example.dicodingevent.domain.usecase.local.GetFavoriteEventById
+import com.example.dicodingevent.domain.usecase.local.InsertFavoriteEvent
+import com.example.dicodingevent.domain.usecase.network.GetEventDetailUseCase
+import com.example.dicodingevent.domain.usecase.network.GetEventUseCase
+import com.example.dicodingevent.domain.usecase.network.SearchEventUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,22 +21,23 @@ object AppModule {
     @Provides
     @Singleton
     fun provideUseCase(
-        getEventUsecase: GetEventUsecase,
-        getEventDetailUsecase: GetEventDetailUsecase,
-        getAllEventLocalUseCase: GetAllEventLocalUseCase,
-        insertAllEventLocalUseCase: InsertAllEventLocalUseCase,
-        getAllEventLocalFavorite: GetAllEventLocalFavorite,
-        getEventLocalByIdUseCase: GetEventLocalByIdUseCase,
-        updateEventLocalUseCase: UpdateEventLocalUseCase
-    ): UseCase {
+        getEventUseCase: GetEventUseCase,
+        getEventDetailUseCase: GetEventDetailUseCase,
+        insertFavoriteEvent: InsertFavoriteEvent,
+        deleteFavoriteEvent: DeleteFavoriteEvent,
+        getAllFavoriteEvents: GetAllFavoriteEvents,
+        getFavoriteEventById: GetFavoriteEventById,
+        searchEventUseCase: SearchEventUseCase,
+
+        ): UseCase {
         return UseCase(
-            getEventUsecase,
-            getEventDetailUsecase,
-            getAllEventLocalUseCase,
-            updateEventLocalUseCase,
-            getEventLocalByIdUseCase,
-            getAllEventLocalFavorite,
-            insertAllEventLocalUseCase
+            getEventUseCase,
+            getEventDetailUseCase,
+            insertFavoriteEvent,
+            searchEventUseCase,
+            deleteFavoriteEvent,
+            getFavoriteEventById,
+            getAllFavoriteEvents
         )
     }
 }

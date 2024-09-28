@@ -1,6 +1,7 @@
-package com.example.dicodingevent.presentation.components
+package com.example.dicodingevent.ui.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,20 +13,26 @@ import com.example.dicodingevent.domain.model.EventEntity
 
 @Composable
 fun EventList(
-    events: List<EventEntity>,
+    events: List<Event>,
     onEventClick: (Int) -> Unit,
-    modifier: Modifier = Modifier
 ) {
+
     LazyColumn(
-        modifier = modifier
+        modifier = Modifier
             .padding(horizontal = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(space = 16.dp)
+        verticalArrangement = Arrangement.spacedBy(space = 8.dp)
 
     ) {
+
         items(events) { event ->
             EventItem(
                 eventItem = event,
                 onClick = onEventClick
+            )
+        }
+        item {
+            Spacer(
+                modifier = Modifier.padding(4.dp)
             )
         }
     }

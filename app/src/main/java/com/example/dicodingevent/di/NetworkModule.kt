@@ -37,7 +37,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRemoteRepository(apiService: ApiService): RemoteDataRepository{
+    fun provideRemoteRepository(apiService: ApiService): RemoteDataRepository {
         return RemoteDataRepositoryImpl(apiService)
     }
 }

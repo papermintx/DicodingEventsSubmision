@@ -1,5 +1,10 @@
 package com.example.dicodingevent.domain.model
 
+import android.os.Parcel
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Event(
     val id: Int,
     val name: String,
@@ -15,24 +20,13 @@ data class Event(
     val beginTime: String,
     val endTime: String,
     val link: String
-)
+): Parcelable
 
 fun Event.toEntity(): EventEntity {
     return EventEntity(
         id = id,
         name = name,
-        summary = summary,
-        description = description,
-        imageLogo = imageLogo,
         mediaCover = mediaCover,
-        category = category,
-        ownerName = ownerName,
-        cityName = cityName,
-        quota = quota,
-        registrants = registrants,
-        beginTime = beginTime,
         endTime = endTime,
-        link = link,
-        isFavorite = 0
     )
 }

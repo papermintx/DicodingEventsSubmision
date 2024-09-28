@@ -6,10 +6,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class GetAllEventLocalFavorite @Inject constructor(
+class GetAllFavoriteEvents @Inject constructor(
     private val repository: LocalDataRepository
 ) {
-    suspend operator fun invoke() : Flow<List<EventEntity>> = flow {
-        emit(repository.getAllFavoriteEvent())
+
+    suspend operator fun invoke()  : Flow<List<EventEntity>> = flow {
+        emit(repository.getAllFavoriteEvents())
     }
 }

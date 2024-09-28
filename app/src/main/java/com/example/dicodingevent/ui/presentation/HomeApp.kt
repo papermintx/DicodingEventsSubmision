@@ -1,6 +1,9 @@
-package com.example.dicodingevent.presentation
+package com.example.dicodingevent.ui.presentation
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.History
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Upcoming
 import androidx.compose.material.icons.filled.Update
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,32 +33,28 @@ fun HomeApp(eventtoDetailClick: (Int) -> Unit) {
             unselectedIcon = Icons.Filled.Home
         ),
         BottomNavigationItem(
-            title = "Upcoming",
-            selectedIcon = Icons.Filled.Upcoming,
-            unselectedIcon = Icons.Filled.Upcoming
+            title = "Finished",
+            selectedIcon = Icons.Filled.History,
+            unselectedIcon = Icons.Filled.History
+        ),
+
+        BottomNavigationItem(
+            title = "Favorite",
+            selectedIcon = Icons.Filled.Favorite,
+            unselectedIcon = Icons.Filled.Favorite
         ),
         BottomNavigationItem(
-            title = "Finished",
-            selectedIcon = Icons.Filled.Update,
-            unselectedIcon = Icons.Filled.Update
-        )
+            title = "Search",
+            selectedIcon = Icons.Filled.Search,
+            unselectedIcon = Icons.Filled.Search
+        ),
+
     )
 
     var selectedItemIndex by remember { mutableIntStateOf(0) }
     val navController = rememberNavController()
 
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = {
-                   when(selectedItemIndex){
-                       0 -> Text("All Event")
-                       1 -> Text("Upcoming Event")
-                       2 -> Text("Finished Event")
-                   }
-                }
-            )
-        },
         bottomBar = {
             NavigationBar {
                 items.forEachIndexed { index, item ->
@@ -65,8 +64,9 @@ fun HomeApp(eventtoDetailClick: (Int) -> Unit) {
                             selectedItemIndex = index
                             when (index) {
                                 0 -> navController.navigate(NavScreen.Home.route)
-                                1 -> navController.navigate(NavScreen.Upcoming.route)
-                                2 -> navController.navigate(NavScreen.Finished.route)
+                                1 -> navController.navigate(NavScreen.Finished.route)
+                                2 -> navController.navigate(NavScreen.Favorite.route)
+                                3 -> navController.navigate(NavScreen.Search.route)
                             }
                         },
                         icon = {
@@ -86,7 +86,7 @@ fun HomeApp(eventtoDetailClick: (Int) -> Unit) {
             }
         }
     ) { paddingValues ->
-        Navigation(navController = navController, paddingValues = paddingValues, eventtoDetailClick = eventtoDetailClick)
+        Navigation(navController = navController, paddingValues = paddingValues, eventDetailClick = eventtoDetailClick)
     }
 
 }

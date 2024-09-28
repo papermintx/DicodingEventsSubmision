@@ -37,7 +37,7 @@ data class EventDto(
     val link: String
 )
 
-fun EventDto.toEvent(): Event{
+fun EventDto.toEvent(): Event {
     return Event(
         id = id,
         name = name,

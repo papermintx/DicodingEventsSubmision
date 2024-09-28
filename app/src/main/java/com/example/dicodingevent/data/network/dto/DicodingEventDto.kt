@@ -15,7 +15,7 @@ data class DicodingEventDto(
     val listEvents: List<EventDto>
 )
 
-fun DicodingEventDto.toDicodingEvent(): DicodingEvent{
+fun DicodingEventDto.toDicodingEvent(): DicodingEvent {
     return DicodingEvent(
         error = error,
         message = message,

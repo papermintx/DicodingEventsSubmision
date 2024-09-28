@@ -1,19 +1,19 @@
 package com.example.dicodingevent.domain.usecase
 
-import com.example.dicodingevent.domain.usecase.local.GetAllEventLocalFavorite
-import com.example.dicodingevent.domain.usecase.local.GetAllEventLocalUseCase
-import com.example.dicodingevent.domain.usecase.local.GetEventLocalByIdUseCase
-import com.example.dicodingevent.domain.usecase.local.InsertAllEventLocalUseCase
-import com.example.dicodingevent.domain.usecase.local.UpdateEventLocalUseCase
-import com.example.dicodingevent.domain.usecase.network.GetEventDetailUsecase
-import com.example.dicodingevent.domain.usecase.network.GetEventUsecase
+import com.example.dicodingevent.domain.usecase.local.DeleteFavoriteEvent
+import com.example.dicodingevent.domain.usecase.local.GetAllFavoriteEvents
+import com.example.dicodingevent.domain.usecase.local.GetFavoriteEventById
+import com.example.dicodingevent.domain.usecase.local.InsertFavoriteEvent
+import com.example.dicodingevent.domain.usecase.network.GetEventDetailUseCase
+import com.example.dicodingevent.domain.usecase.network.GetEventUseCase
+import com.example.dicodingevent.domain.usecase.network.SearchEventUseCase
 
 data class UseCase(
-    val getEventUsecase: GetEventUsecase,
-    val getEventDetailUsecase: GetEventDetailUsecase,
-    val getAllEventLocalUseCase: GetAllEventLocalUseCase,
-    val updateEventLocalUseCase: UpdateEventLocalUseCase,
-    val getEventLocalByIdUseCase: GetEventLocalByIdUseCase,
-    val getAllEventLocalFavorite: GetAllEventLocalFavorite,
-    val insertAllEventLocalUseCase: InsertAllEventLocalUseCase
+    val getEventUseCase: GetEventUseCase,
+    val getEventDetailUseCase: GetEventDetailUseCase,
+    val insertFavoriteEvent: InsertFavoriteEvent,
+    val searchEventUseCase: SearchEventUseCase,
+    val deleteFavoriteEvent: DeleteFavoriteEvent,
+    val getFavoriteEventById: GetFavoriteEventById,
+    val getAllFavoriteEvents: GetAllFavoriteEvents
 )

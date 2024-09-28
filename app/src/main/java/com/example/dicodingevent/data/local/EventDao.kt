@@ -1,6 +1,7 @@
 package com.example.dicodingevent.data.local
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -9,18 +10,17 @@ import com.example.dicodingevent.domain.model.EventEntity
 
 @Dao
 interface EventDao {
-    @Query("SELECT * FROM events")
-    suspend fun getAllEvents(): List<EventEntity>
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertEvents(events: List<EventEntity>)
+    suspend fun insertEvents(events: EventEntity)
 
-    @Update(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateEvent(event: EventEntity)
+    @Query("SELECT * FROM eventsFavorite")
+    suspend fun getAllFavoriteEvents(): List<EventEntity>
 
-    @Query("SELECT * FROM events WHERE isFavorite = 1")
-    suspend fun getFavoriteEvents(): List<EventEntity>
+    @Query("SELECT * FROM eventsFavorite WHERE id = :id")
+    suspend fun getFavoriteEventById(id: Int): EventEntity
 
-    @Query("SELECT * FROM events WHERE id = :id")
-    suspend fun getEventById(id: Int): EventEntity
+    @Query("DELETE FROM eventsFavorite WHERE id = :id")
+    suspend fun deleteEvent(id: Int)
+
+
 }

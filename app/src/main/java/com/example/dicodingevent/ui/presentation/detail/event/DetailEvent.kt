@@ -1,4 +1,4 @@
-package com.example.dicodingevent.presentation.detailscreen
+package com.example.dicodingevent.ui.presentation.detail.event
 
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.OpenInBrowser
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,8 +27,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.example.dicodingevent.presentation.components.ErrorScreen
-import com.example.dicodingevent.presentation.components.LoadingScreen
+import com.example.dicodingevent.ui.presentation.components.ErrorScreen
+import com.example.dicodingevent.ui.presentation.components.LoadingScreen
+import com.example.dicodingevent.util.Poppins
 import com.example.dicodingevent.util.ResultState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -36,16 +39,18 @@ fun DetailEventScreen(
     viewModel: DetailViewModel = hiltViewModel(),
     id: Int,
     onBack: () -> Unit,
-
     ) {
-    // on below line we are creating
-    // a variable for a context
     val ctx = LocalContext.current
 
     LaunchedEffect(id) {
-        viewModel.getEvenLocaltById(id)
+        viewModel.getEventDetail(id)
     }
-    val uiState by viewModel.eventDetailLocalDicoding.collectAsState()
+    val uiState by viewModel.eventDetail.collectAsState()
+
+    val isFavorite by viewModel.eventFavorite.collectAsState()
+
+    val redColor = Color(0xFFFF0000)
+    val greyColor = Color(0xFF858585)
 
     Scaffold(
         topBar = {
@@ -55,7 +60,7 @@ fun DetailEventScreen(
                     IconButton(onClick = onBack) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                     }
-                },
+                }
 
             )
         }
@@ -71,17 +76,45 @@ fun DetailEventScreen(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     item {
-                        AsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(event.mediaCover)
-                                .crossfade(true)
-                                .build(),
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(200.dp),
-                            contentDescription = null,
-                            contentScale = ContentScale.Crop,
-                        )
+                                .height(200.dp)
+                        ) {
+                            AsyncImage(
+                                model = ImageRequest.Builder(LocalContext.current)
+                                    .data(event.mediaCover)
+                                    .crossfade(true)
+                                    .build(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(200.dp),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop,
+                            )
+
+                            IconButton(
+                                onClick = {
+                                    if (isFavorite) {
+                                        viewModel.deleteEventFavorite(event.id)
+                                    } else {
+                                        viewModel.saveEventFavorite(event)
+                                    }
+                                },
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .padding(16.dp)
+                                    .size(48.dp)
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.Favorite,
+                                    contentDescription = "Favorite",
+                                    tint = if (isFavorite) redColor else greyColor
+                                )
+                            }
+
+                        }
+
                     }
 
                     item {
@@ -90,19 +123,18 @@ fun DetailEventScreen(
                             style = TextStyle(
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF000000)
+                                color = MaterialTheme.colorScheme.onBackground,
                             ),
                             modifier = Modifier.padding(bottom = 8.dp)
                         )
                     }
 
                     item {
-                        // Penyelenggara Acara
                         Text(
                             text = "Penyelenggara: ${event.ownerName}",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                color = Color(0xFF858585)
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
                         )
                     }
@@ -113,7 +145,7 @@ fun DetailEventScreen(
                             text = "Waktu: ${event.beginTime}",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                color = Color(0xFF858585)
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
                         )
                     }
@@ -124,7 +156,7 @@ fun DetailEventScreen(
                             text = "Sisa Kuota: ${event.quota - event.registrants}",
                             style = TextStyle(
                                 fontSize = 16.sp,
-                                color = Color(0xFF858585)
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
                         )
                     }
@@ -136,7 +168,7 @@ fun DetailEventScreen(
                             style = TextStyle(
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Bold,
-                                color = Color(0xFF000000)
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
                         )
                     }
@@ -149,7 +181,7 @@ fun DetailEventScreen(
                             style = TextStyle(
                                 fontSize = 14.sp,
                                 lineHeight = 20.sp,
-                                color = Color(0xFF858585),
+                                color = MaterialTheme.colorScheme.onBackground,
                             ),
                             overflow = TextOverflow.Ellipsis,
 
@@ -164,17 +196,21 @@ fun DetailEventScreen(
                                     Intent.ACTION_VIEW,
                                     Uri.parse(event.link)
                                 )
+
                                 ctx.startActivity(urlIntent)
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Buka di Browser")
+                            Text("Buka di Browser", style = TextStyle(
+                                fontFamily = Poppins.bold,
+                                color = MaterialTheme.colorScheme.onBackground,
+                            ))
                         }
                     }
                 }
             }
             is ResultState.Error -> {
-                ErrorScreen(message = "Error: ${state.exception.message}")
+                ErrorScreen(message = "Error: ${state.exception}")
             }
             ResultState.Idle -> {
                 Column(
@@ -187,7 +223,7 @@ fun DetailEventScreen(
                         style = TextStyle(
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
-                            color = Color(0xFF000000),
+                            color = MaterialTheme.colorScheme.onBackground,
                             textAlign = TextAlign.Center
                         )
                     )

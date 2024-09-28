@@ -6,5 +6,8 @@ import com.example.dicodingevent.data.network.dto.DicodingEventDto
 interface RemoteDataRepository {
     suspend fun getEvents(active: Int): DicodingEventDto
 
+    suspend fun searchEvents(active: Int, query: String): DicodingEventDto
+
     suspend fun getEventDetail(id: Int): DetailEventDto
+
 }

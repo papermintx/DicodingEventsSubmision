@@ -5,13 +5,13 @@ import androidx.compose.ui.text.font.FontFamily
 
 import com.example.dicodingevent.R
 
-object Font {
+object Poppins {
 
-    val poppinsRegular = FontFamily(
+    val regular = FontFamily(
         Font(R.font.popregular)
     )
 
-    val poppinsBold = FontFamily(
+    val bold = FontFamily(
         Font(R.font.popbold)
     )
 }

@@ -9,7 +9,14 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("events")
     suspend fun getEvents(
-        @Query("active") active: Int
+        @Query("active") active: Int,
+    ) : DicodingEventDto
+
+
+    @GET("events")
+    suspend fun searchEvent(
+        @Query("active") active: Int,
+        @Query("q") search: String
     ) : DicodingEventDto
 
 

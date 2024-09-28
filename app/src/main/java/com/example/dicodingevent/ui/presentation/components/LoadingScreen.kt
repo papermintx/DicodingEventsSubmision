@@ -1,4 +1,4 @@
-package com.example.dicodingevent.presentation.components
+package com.example.dicodingevent.ui.presentation.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -17,6 +17,13 @@ class RemoteDataRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun searchEvents(active: Int, query: String): DicodingEventDto {
+        return withContext(Dispatchers.Default){
+            apiService.searchEvent(active, query)
+        }
+    }
+
+
     override suspend fun getEventDetail(id: Int): DetailEventDto {
         return  withContext(Dispatchers.Default){
             apiService.getEventDetail(id)

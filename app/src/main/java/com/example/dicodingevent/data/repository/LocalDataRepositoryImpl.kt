@@ -10,35 +10,32 @@ import javax.inject.Inject
 
 class LocalDataRepositoryImpl @Inject constructor(
     private val eventDao: EventDao
-): LocalDataRepository{
-    override suspend fun insertEvent(event: List<EventEntity>) {
-       return withContext(Dispatchers.IO){
-           eventDao.insertEvents(event)
-       }
-    }
-
-    override suspend fun updateEvent(event: EventEntity) {
+): LocalDataRepository {
+    override suspend fun insertFavoriteEvent(event: EventEntity) {
         return withContext(Dispatchers.IO){
-            eventDao.updateEvent(event)
+            eventDao.insertEvents(event)
         }
     }
 
-    override suspend fun getAllEvent(): List<EventEntity> {
+
+    override suspend fun deleteEvent(id: Int) {
         return withContext(Dispatchers.IO){
-            eventDao.getAllEvents()
+            eventDao.deleteEvent(id)
+        }
+    }
+
+    override suspend fun getAllFavoriteEvents(): List<EventEntity> {
+        return withContext(Dispatchers.IO){
+            eventDao.getAllFavoriteEvents()
         }
     }
 
     override suspend fun getEventById(id: Int): EventEntity {
         return withContext(Dispatchers.IO){
-            eventDao.getEventById(id)
+            eventDao.getFavoriteEventById(id)
+
         }
     }
 
-    override suspend fun getAllFavoriteEvent(): List<EventEntity> {
-        return withContext(Dispatchers.IO){
-            eventDao.getFavoriteEvents()
-        }
-    }
 
 }

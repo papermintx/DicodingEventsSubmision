@@ -10,8 +10,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.dicodingevent.navigation.NavScreen
-import com.example.dicodingevent.presentation.HomeApp
-import com.example.dicodingevent.presentation.detailscreen.DetailEventScreen
+import com.example.dicodingevent.ui.presentation.HomeApp
+import com.example.dicodingevent.ui.presentation.detail.event.DetailEventScreen
 import com.example.dicodingevent.ui.theme.DicodingEventTheme
 import dagger.hilt.android.AndroidEntryPoint
 
