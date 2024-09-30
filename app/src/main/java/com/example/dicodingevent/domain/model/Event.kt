@@ -30,3 +30,29 @@ fun Event.toEntity(): EventEntity {
         endTime = endTime,
     )
 }
+
+data class EventSymple(
+    val id: Int,
+    val name: String,
+    val mediaCover: String,
+    val endTime: String
+)
+
+fun Event.Empty(): Event {
+    return Event(
+        id = 0,
+        name = "",
+        summary = "",
+        description = "",
+        imageLogo = "",
+        mediaCover = "",
+        category = "",
+        ownerName = "",
+        cityName = "",
+        quota = 0,
+        registrants = 0,
+        beginTime = "",
+        endTime = "",
+        link = ""
+    )
+}

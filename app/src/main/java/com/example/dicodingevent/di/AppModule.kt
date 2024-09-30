@@ -40,4 +40,6 @@ object AppModule {
             getAllFavoriteEvents
         )
     }
+
+
 }

@@ -6,9 +6,15 @@ import com.example.dicodingevent.util.Poppins
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -36,6 +42,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onItemClick: (Int) -> Unit,
     paddingValues: PaddingValues,
+    onSettingsClick : () -> Unit
 ) {
     LaunchedEffect(viewModel) {
         viewModel.getEventForHome()
@@ -62,16 +69,32 @@ fun HomeScreen(
                     Spacer(
                         modifier = Modifier.padding(bottom = 16.dp)
                     )
-                    Text(
-                        text = "Upcoming Event",
-                        style = TextStyle(
-                            fontSize = 20.sp,
-                            fontFamily = Poppins.bold,
-                            color = MaterialTheme.colorScheme.onBackground,
-                            textAlign = TextAlign.Start,
-                        ),
-                        modifier = Modifier.padding(8.dp)
-                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Upcoming Event",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                fontFamily = Poppins.bold,
+                                color = MaterialTheme.colorScheme.onBackground,
+                                textAlign = TextAlign.Start,
+                            ),
+                            modifier = Modifier.padding(8.dp)
+                        )
+
+                        IconButton(
+                            onClick = onSettingsClick,
+                            modifier = Modifier.align(Alignment.CenterVertically)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Settings,
+                                contentDescription = "Settings",
+                                tint = Color.Blue
+                            )
+                        }
+                    }
                     // 5  Event Upcoming
                     ListEventRow(listEvent = stateUpcoming.data, onClick = onItemClick)
                     // 5  Event Finished

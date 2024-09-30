@@ -1,4 +1,4 @@
-package com.example.dicodingevent.ui.presentation.finished.event
+package com.example.dicodingevent.ui.presentation.upcomming.event
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,28 +15,26 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FinishedScreenViewModel @Inject constructor(
+class UpcomingViewModel @Inject constructor(
     private val useCase: UseCase
-) : ViewModel() {
+) : ViewModel(){
+    private val _upcomingEvent = MutableStateFlow<ResultState<List<Event>>>(ResultState.Idle)
+    val upcomingEvent = _upcomingEvent.asStateFlow()
 
-    private val _finishedEvent = MutableStateFlow<ResultState<List<Event>>>(ResultState.Idle)
-    val finishedEvent = _finishedEvent.asStateFlow()
-
-    // Flag untuk menandai apakah data sudah di-fetch
     private var hasFetchedData = false
 
-    fun getFinishedEvent() = viewModelScope.launch {
+    fun getUpcomingEvent() = viewModelScope.launch {
         if (!hasFetchedData) {
-            useCase.getEventUseCase(0)
+            useCase.getEventUseCase(1)
                 .onStart {
-                    _finishedEvent.value = ResultState.Loading
+                    _upcomingEvent.value = ResultState.Loading
                 }
                 .catch {
-                    _finishedEvent.value = ResultState.Error("Something went wrong when getting data")
+                    _upcomingEvent.value = ResultState.Error("Something went wrong when getting data")
                 }
                 .collect {
                     val data = it.toDicodingEvent()
-                    _finishedEvent.value = ResultState.Success(data.listEvents)
+                    _upcomingEvent.value = ResultState.Success(data.listEvents)
                     hasFetchedData = true
                 }
         }

@@ -1,6 +1,7 @@
 package com.example.dicodingevent.navigation
 
 sealed class NavScreen(val route: String) {
+    data object Setting : NavScreen("setting")
     data object Home : NavScreen("home")
     data object Upcoming : NavScreen("upcoming")
     data object Finished : NavScreen("finished")
